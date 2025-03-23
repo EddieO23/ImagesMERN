@@ -1,17 +1,23 @@
 import React from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Layouts from './Layouts'
+import { AppContextProvider } from './Context/AppContext'
+import ImageCard from './Components/ImageCard'
+import ImageUploader from './Components/ImageUploader'
 
 
 function App() {
   return (
-    <Router>
+    <AppContextProvider>
+      <Router>
       <Routes>
         <Route path='/' element={<Layouts/>}>
-        <Route path='/upload' element={<h1>Hello, this is the upload route</h1>}/>
+        <Route path='/' element={<ImageCard/>}/>
+        <Route path='/upload' element={<ImageUploader/>}/>
         </Route>
       </Routes>
     </Router>
+    </AppContextProvider>
   )
 }
 
