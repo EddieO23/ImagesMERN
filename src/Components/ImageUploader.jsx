@@ -6,7 +6,7 @@ import AppContext from '../Context/AppContext'
 
 function ImageUploader() {
 
-  const {setRefresh} = useContext(AppContext)
+  const context = useContext(AppContext)
 
   const navigate = useNavigate();
   const [file, setFile] = useState('');
@@ -54,7 +54,7 @@ function ImageUploader() {
       setFile('');
       setTitle('');
       setKey((prevKey) => prevKey + 1);
-      setRefresh((prevKey) => prevKey + 1);
+      context?.setRefresh((prevKey) => prevKey + 1);
       navigate('/');
       setLoading(false);
     } catch (error) {
