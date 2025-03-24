@@ -9,6 +9,7 @@ export function AppContextProvider({ children }) {
   const [selectedImageId, setSelectedImageId] = useState(null);
   const [selectedImageTitle, setSelectedImageTitle] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentIdx, setCurrentIdx] = useState(null)
 
   const getAllImages = async () => {
     try {
@@ -69,9 +70,6 @@ export function AppContextProvider({ children }) {
 
   useEffect(() => {
     getAllImages();
-  }, []);
-  useEffect(() => {
-    getAllImages();
   }, [refresh]);
 
   return (
@@ -86,7 +84,9 @@ export function AppContextProvider({ children }) {
         handleTitleUpdate,
         isLoading,
         setIsLoading,
-        handleImageDelete
+        handleImageDelete,
+        setCurrentIdx,
+        currentIdx
       }}
     >
       {children}

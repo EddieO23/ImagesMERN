@@ -3,29 +3,24 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { SlOptionsVertical } from 'react-icons/sl';
 import AppContext from '../Context/AppContext';
 import Modal from './Modal';
+import ImageModal from './ImageModal';
+import SkeletonLoader from './SkeletonLoader';
 
 function ImageCard() {
-  const arr = new Array(10).fill(0);
-  const {
-    allImages,
-    selectedImageId,
-    setSelectedImageId,
-    setSelectedImageTitle,
-    selectedImageTitle,
-  } = useContext(AppContext);
+
+  const context = useContext(AppContext)
 
   return (
     // Container that holds all images
     <div className='h-[90vh] flex flex-wrap content-start overflow-y-scroll gap-14 p-4 sm:gap-x-6'>
       {/* Individual card image */}
 
-      {allImages &&
-        allImages.map((item, index) => (
+      {context?.allImages ? context?.allImages.map((item, index) => (
           <div
             className='w-full h-fit sm:w-[28rem] relative hover:cursor-pointer'
             key={index}
           >
-            <div className='overflow-hidden rounded-t-lg'>
+            <div onClick={()=>{context.setCurrentIdx(index)}} className='overflow-hidden rounded-t-lg'>
               <LazyLoadImage
                 className='aspect-video w-full hover:scale-110 hover:rotate-2 transition-transform duration-300'
                 src={item.imageUrl}
@@ -39,8 +34,8 @@ function ImageCard() {
                 </div>
                 <button
                   onClick={() => {
-                    setSelectedImageId(item._id);
-                    setSelectedImageTitle(item.title);
+                    context?.setSelectedImageId(item._id);
+                    context?.setSelectedImageTitle(item.title);
                   }}
                   className='text-2xl font-bold'
                 >
@@ -49,8 +44,9 @@ function ImageCard() {
               </div>
             </div>
           </div>
-        ))}
-      {selectedImageId && <Modal />}
+        )) : <SkeletonLoader/>}
+      {context?.selectedImageId && <Modal />}
+      {context?.currentIdx != null && <ImageModal />}
     </div>
   );
 }
